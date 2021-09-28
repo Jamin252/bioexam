@@ -57,11 +57,9 @@ class Frontier():
                 return True
         return False
 
-def main():
-    temp = input("numbers: ")
-    temp1 = temp.split(" ")
-    number = int(temp1[0])
-    target = int(temp1[1])
+def main(nfrom, nto):
+    number = nfrom
+    target = nto
     frontier_start = Frontier()
     frontier_final = Frontier()
     start = Node(number)
@@ -110,12 +108,11 @@ def main():
 
 
 if __name__ == "__main__":
-    start = time.time()
-    num1 = main()
-    num2 = main()
-    num3 = main()
-    print(num1)
-    print(num2)
-    print(num3)
-    end = time.time()
-    print("time =",end - start)
+    count = 0
+    number = []
+    zero = ["Z", "E", "R", "O"]
+    for i in range(1, 100):
+        x = main(i, 0)
+        if x == 1:
+            count += 1
+    print(count)
