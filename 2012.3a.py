@@ -78,11 +78,6 @@ def main():
 
         node = frontier.remove()
 
-        if frontier.contain(target):
-            for node1 in frontier.frontier:
-                if node1.number == target:
-                    return node1.action_made
-
         explored.append(node.number)
         for num in node.neighbour():
             if num not in explored and not frontier.contain(num):

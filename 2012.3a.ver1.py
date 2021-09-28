@@ -1,4 +1,4 @@
-import copy
+import copy, time
 
 NUMBERS = ["ZERO", "ONE", "TWO", "THREE", "FOUR", "FIVE", "SIX", "SEVEN", "EIGHT", "NINE"]
 
@@ -8,13 +8,11 @@ def numberdifference(numfrom, numto):
     tempto = copy.deepcopy(numberto)
     tempfrom = copy.deepcopy(numberfrom)
     for i in tempto:
-        br = False
         for k in tempfrom:
             if i == k:
                 numberto.remove(i)
                 numberfrom.remove(k)
                 tempfrom.remove(k)
-                br = True
                 break
     return len(numberto) + len(numberfrom)
 
@@ -64,42 +62,60 @@ def main():
     temp1 = temp.split(" ")
     number = int(temp1[0])
     target = int(temp1[1])
-    frontier = Frontier()
+    frontier_start = Frontier()
+    frontier_final = Frontier()
     start = Node(number)
-    frontier.frontier.append(start)
+    final = Node(target)
+    frontier_start.frontier.append(start)
+    frontier_final.frontier.append(final)
 
     explored = []
+    explored_final = []
     while True:
-        if len(frontier.frontier) == 0:
+        if len(frontier_start.frontier) == 0 or len(frontier_final.frontier) == 0:
+            return "no solution"
+        
+        for tempnode in frontier_final.frontier:
+            for node1 in frontier_start.frontier:
+                if node1.number == tempnode.number:
+                    return node1.action_made + tempnode.action_made
+
+        node_start = frontier_start.remove()
+
+        explored.append(node_start.number)
+        for num in node_start.neighbour():
+            if num not in explored and not frontier_start.contain(num):
+                child = Node(num)
+                child.action_made = node_start.action_made + 1
+                frontier_start.frontier.append(child)
+
+        if len(frontier_start.frontier) == 0 or len(frontier_final.frontier) == 0:
             return "no solution"
 
-        if frontier.contain(target):
-            for node1 in frontier.frontier:
-                if node1.number == target:
-                    return node1.action_made
+        for tempnode in frontier_final.frontier:
+            for node1 in frontier_start.frontier:
+                if node1.number == tempnode.number:
+                    return node1.action_made + tempnode.action_made
+        
+        node_final = frontier_final.remove()
 
-        node = frontier.remove()
-
-        if frontier.contain(target):
-            for node1 in frontier.frontier:
-                if node1.number == target:
-                    return node1.action_made
-
-        explored.append(node.number)
-        for num in node.neighbour():
-            if num not in explored and not frontier.contain(num):
-                child = Node(num)
-                child.action_made = node.action_made + 1
-                frontier.frontier.append(child)
-
+        explored_final.append(node_final.number)
+        for num in node_final.neighbour():
+            if num not in explored and not frontier_final.contain(num):
+                child_final = Node(num)
+                child_final.action_made = node_final.action_made + 1
+                frontier_final.frontier.append(child_final)
 
 
 
 
 if __name__ == "__main__":
+    start = time.time()
     num1 = main()
     num2 = main()
     num3 = main()
     print(num1)
     print(num2)
     print(num3)
+    end = time.time()
+    print("time =",end - start)
