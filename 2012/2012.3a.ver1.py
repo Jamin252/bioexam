@@ -57,9 +57,11 @@ class Frontier():
                 return True
         return False
 
-def main(nfrom, nto):
-    number = nfrom
-    target = nto
+def main(temp):
+    print(temp)
+    temp1 = temp.split(" ")
+    number = int(temp1[0])
+    target = int(temp1[1])
     frontier_start = Frontier()
     frontier_final = Frontier()
     start = Node(number)
@@ -108,11 +110,15 @@ def main(nfrom, nto):
 
 
 if __name__ == "__main__":
-    count = 0
-    number = []
-    zero = ["Z", "E", "R", "O"]
-    for i in range(1, 100):
-        x = main(i, 0)
-        if x == 1:
-            count += 1
-    print(count)
+    start = time.time()
+    with open("2012.3a.txt") as file:
+        lines = file.read()
+    line = lines.split("\n")
+    num1 = main(line[0])
+    num2 = main(line[1])
+    num3 = main(line[2])
+    print(num1)
+    print(num2)
+    print(num3)
+    end = time.time()
+    print("time =",end - start)

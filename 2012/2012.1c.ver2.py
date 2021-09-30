@@ -1,3 +1,4 @@
+"""
 def DPF(num):
     i = 1
     for j in range(19):
@@ -10,5 +11,6 @@ def DPF(num):
 
 x = []
 for num in range(1000):
-    if DPF(num) == num
+    if DPF(num) == num:
         x.append(num)
+"""

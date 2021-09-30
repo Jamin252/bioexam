@@ -5,7 +5,7 @@ result = DefaultDict(lambda: 0)
 revealed = set()
 
 try:
-    for org_num in reversed(range(0, 1000000, 30)):
+    for org_num in reversed(range(0, 1000000, 210)):
         if org_num == 0:
             continue
         num = org_num
